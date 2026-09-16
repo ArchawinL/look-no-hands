@@ -1,0 +1,25 @@
+# models and face data: never commit
+gaze-py/models/
+recordings/
+*.task
+*.onnx
+*.tflite
+
+# build output
+target/
+build/
+vcpkg_installed/
+
+# python
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# os / editors
+.DS_Store
+.idea/
+.vscode/

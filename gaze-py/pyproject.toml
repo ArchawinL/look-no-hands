@@ -1,0 +1,31 @@
+[project]
+name = "look-no-hands"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "ArchawinL", email = "a.leelapanang@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "mediapipe>=1.0.1",
+    "numpy>=2.5.3",
+    "opencv-python>=5.0.0.93",
+    "platformdirs>=4.11.9",
+    "screeninfo>=0.8.1",
+]
+
+[project.scripts]
+look-no-hands = "look_no_hands:main"
+
+[build-system]
+requires = ["uv_build>=0.12.15,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "jsonschema>=4.26.0",
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "ruff>=0.16.7",
+]
