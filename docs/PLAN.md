@@ -1,6 +1,6 @@
-# gazehint — Repository Initialisation Plan
+# look-no-hands — Repository Initialisation Plan
 
-> Working name: **gazehint** (rename freely; do a global find/replace before M0 is committed).
+> Project name: **look-no-hands** (Python package `look_no_hands`, Rust crates `look-no-hands-*`).
 > This file covers *how the repo is set up*. What to build and in what order lives in [`MILESTONES.md`](./MILESTONES.md).
 
 ## 1. What we're building
@@ -50,7 +50,7 @@ The **protocol** (`protocol/`) is the contract between them. Both gaze implement
 | # | Decision | Default if not decided |
 |---|---|---|
 | D1 | Primary development OS (decides first Rust platform backend) | Leave all three backends stubbed |
-| D2 | Project name | `gazehint` |
+| D2 | Project name | `look-no-hands` |
 | D3 | License | MIT |
 | D4 | Python version pin | 3.12 — **verify** a `mediapipe` wheel exists for the pinned version and OS before committing |
 | D5 | IPC transport and port | TCP `127.0.0.1:47800`, newline-delimited JSON |
@@ -61,7 +61,7 @@ Record each settled decision as a short file in `docs/decisions/NNNN-title.md` (
 ## 5. Target repository layout
 
 ```
-gazehint/
+look-no-hands/
 ├── CLAUDE.md                     # agent operating rules (read first)
 ├── README.md                     # quick start for humans
 ├── LICENSE
@@ -85,9 +85,9 @@ gazehint/
 ├── gaze-py/
 │   ├── pyproject.toml
 │   ├── README.md
-│   ├── src/gazehint_gaze/
+│   ├── src/look_no_hands/
 │   │   ├── __init__.py
-│   │   ├── __main__.py           # CLI entry: `python -m gazehint_gaze <cmd>`
+│   │   ├── __main__.py           # CLI entry: `python -m look_no_hands <cmd>`
 │   │   ├── cli.py
 │   │   ├── config.py             # settings dataclasses, load/save (platformdirs)
 │   │   ├── camera.py             # OpenCV capture, timestamps, FPS
@@ -123,14 +123,14 @@ gazehint/
 │   ├── Cargo.toml                # workspace
 │   ├── rust-toolchain.toml
 │   └── crates/
-│       ├── gazehint-core/        # pure logic, no OS calls
-│       ├── gazehint-platform/    # per-OS element providers, overlay, input
-│       └── gazehint-app/         # binary tying it together
+│       ├── look-no-hands-core/        # pure logic, no OS calls
+│       ├── look-no-hands-platform/    # per-OS element providers, overlay, input
+│       └── look-no-hands-app/         # binary tying it together
 ├── gaze-cpp/
 │   ├── CMakeLists.txt
 │   ├── CMakePresets.json
 │   ├── vcpkg.json
-│   ├── include/gazehint/
+│   ├── include/look_no_hands/
 │   ├── src/
 │   └── tests/
 └── recordings/                   # .gitignored — contains face video, never commit
@@ -206,7 +206,7 @@ Conventions:
 
 Must pass `cargo build`, `cargo test`, `cargo clippy -- -D warnings`, and `cargo fmt --check` on all three OSes.
 
-`gazehint-core/src/lib.rs` exposes these modules, each with doc comments and `todo!()` bodies:
+`look-no-hands-core/src/lib.rs` exposes these modules, each with doc comments and `todo!()` bodies:
 
 ```rust
 // geometry.rs
@@ -248,9 +248,9 @@ pub enum Eye { Left, Right }
 
 Tests: one test per `todo!()` function, marked `#[ignore = "R1: implement generate_labels"]`, etc., containing the real assertions so un-ignoring them is the human's first task. Example for `generate_labels`: 30 labels from `"asdfjkl;"` are unique, and no label is a prefix of another.
 
-`gazehint-platform/src/lib.rs`: `#[cfg(target_os = "macos")] mod macos;`, `windows`, `linux`, each exposing a `NativeProvider` struct implementing `ElementProvider` that returns `Err(ProviderError::Unsupported)`. Also empty `overlay.rs` and `input.rs` files with module docs describing their future job.
+`look-no-hands-platform/src/lib.rs`: `#[cfg(target_os = "macos")] mod macos;`, `windows`, `linux`, each exposing a `NativeProvider` struct implementing `ElementProvider` that returns `Err(ProviderError::Unsupported)`. Also empty `overlay.rs` and `input.rs` files with module docs describing their future job.
 
-`gazehint-app/src/main.rs`: prints the version plus "hint mode not implemented yet — see docs/MILESTONES.md (R-track)" and exits 0.
+`look-no-hands-app/src/main.rs`: prints the version plus "hint mode not implemented yet — see docs/MILESTONES.md (R-track)" and exits 0.
 
 Each crate gets a `README.md` of ≤ 15 lines stating its responsibility and which milestones touch it.
 
@@ -258,9 +258,9 @@ Each crate gets a `README.md` of ≤ 15 lines stating its responsibility and whi
 
 Must configure, build, and pass `ctest` on ubuntu with no vcpkg packages installed.
 
-- Targets: `gazehint_gaze` (static library), `gazehint-gaze` (executable), `gazehint_tests` (test executable).
-- `CMakeLists.txt` sets `CMAKE_CXX_STANDARD 20`, turns on warnings (`-Wall -Wextra -Wpedantic` / `/W4`), and adds an option `GAZEHINT_SANITIZE` that enables ASan+UBSan on non-MSVC compilers.
-- Headers in `include/gazehint/`, each with the interface declared and a comment block pointing to its milestone:
+- Targets: `look_no_hands_gaze` (static library), `look-no-hands-gaze` (executable), `look_no_hands_tests` (test executable).
+- `CMakeLists.txt` sets `CMAKE_CXX_STANDARD 20`, turns on warnings (`-Wall -Wextra -Wpedantic` / `/W4`), and adds an option `LOOK_NO_HANDS_SANITIZE` that enables ASan+UBSan on non-MSVC compilers.
+- Headers in `include/look_no_hands/`, each with the interface declared and a comment block pointing to its milestone:
   - `one_euro.hpp` — `class OneEuroFilter { double filter(double value, double t_seconds); void reset(); }`
   - `calibration.hpp` — `struct FeatureVector`, `class Calibration { void fit(...); std::pair<double,double> predict(const FeatureVector&) const; bool load(path); bool save(path) const; }`
   - `wink_detector.hpp` — `enum class Eye`, `struct WinkEvent`, `class WinkDetector { std::optional<WinkEvent> update(double blink_l, double blink_r, int64_t t_ms); }`

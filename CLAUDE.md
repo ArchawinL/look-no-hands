@@ -1,4 +1,4 @@
-# CLAUDE.md — agent operating rules for gazehint
+# CLAUDE.md — agent operating rules for look-no-hands
 
 Read `docs/PLAN.md` (architecture, layout, protocol) and `docs/MILESTONES.md` (stories) before doing anything.
 
@@ -30,7 +30,7 @@ just rs-test
 just cpp-configure && just cpp-build && just cpp-test
 just check-all       # everything; must be green before committing
 ```
-Python code runs through `uv run` from `gaze-py/`, e.g. `uv run python -m gazehint_gaze doctor`.
+Python code runs through `uv run` from `gaze-py/`, e.g. `uv run python -m look_no_hands doctor`.
 
 ## Python conventions
 - Python version per decision D4; type hints everywhere; `mypy --strict` clean on `src/`.

@@ -1,4 +1,4 @@
-# gazehint — Milestones & Stories
+# look-no-hands — Milestones & Stories
 
 Read [`PLAN.md`](./PLAN.md) first for architecture, layout, and the protocol.
 
@@ -316,14 +316,14 @@ The agent's role on these stories is to review, explain, and hint, and to write 
 ### R2 — Region filter and fake provider
 **Owner:** human · **Depends on:** R1
 **Learning focus:** ch. 7 (modules), ch. 8 (collections), ch. 9 (errors), ch. 10 (traits). Add your first crates: `serde` and `serde_json`.
-**Tasks:** Implement `filter_targets`. In `gazehint-platform`, create a `FakeProvider` that reads `protocol/fixtures/targets_sample.json`. `gazehint-app --fake` prints the targets inside a hard-coded circle.
+**Tasks:** Implement `filter_targets`. In `look-no-hands-platform`, create a `FakeProvider` that reads `protocol/fixtures/targets_sample.json`. `look-no-hands-app --fake` prints the targets inside a hard-coded circle.
 **Acceptance:** (auto) Filter tests cover a target straddling the circle's edge, an empty list, and the full-screen region. (auto) A test parses the shared fixture.
 
 ### R3 — Real element provider
 **Owner:** human · **Depends on:** R2, decision D1
 **Learning focus:** reading docs.rs, `cfg` attributes, `anyhow`. Crate for your OS: `axuielement` (macOS), `uiautomation` (Windows), or `atspi` (Linux).
 **Tasks:** `NativeProvider` for the frontmost window plus the menu bar and dock/taskbar. Skip elements that are hidden, zero-sized, or off-screen. Handle a missing permission with a clear message. On macOS, set `AXManualAccessibility` on Chromium/Electron apps.
-**Acceptance:** (manual) `gazehint-app --list` prints sensible targets for Finder/Explorer, a browser, and one Electron app. (manual) Timing is printed; aim for < 150 ms in the frontmost window.
+**Acceptance:** (manual) `look-no-hands-app --list` prints sensible targets for Finder/Explorer, a browser, and one Electron app. (manual) Timing is printed; aim for < 150 ms in the frontmost window.
 
 ### R4 — Global hotkey and key capture
 **Owner:** human · **Depends on:** R2
@@ -391,7 +391,7 @@ Rules: port **from** the Python reference and check every step against `protocol
 **Acceptance:** (auto/manual) On a recorded session's video, the mean landmark distance from Python's `landmarks.jsonl` is within an agreed tolerance (set it after a first measurement and record it in the log).
 
 ### C7 — Blendshapes and full replay parity
-**Acceptance:** (manual) `gazehint-gaze replay` on a recorded session produces gaze within a tolerance of Python's `output.jsonl` and the same wink events.
+**Acceptance:** (manual) `look-no-hands-gaze replay` on a recorded session produces gaze within a tolerance of Python's `output.jsonl` and the same wink events.
 
 ---
 
