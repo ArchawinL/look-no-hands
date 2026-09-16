@@ -1,0 +1,105 @@
+{
+  "screen": {
+    "w": 1512,
+    "h": 982
+  },
+  "targets": [
+    {
+      "id": "t1",
+      "x": 20,
+      "y": 10,
+      "w": 28,
+      "h": 24,
+      "role": "button",
+      "name": "Back"
+    },
+    {
+      "id": "t2",
+      "x": 52,
+      "y": 10,
+      "w": 28,
+      "h": 24,
+      "role": "button",
+      "name": "Forward"
+    },
+    {
+      "id": "t3",
+      "x": 90,
+      "y": 8,
+      "w": 600,
+      "h": 28,
+      "role": "text_field",
+      "name": "Address"
+    },
+    {
+      "id": "t4",
+      "x": 0,
+      "y": 44,
+      "w": 160,
+      "h": 30,
+      "role": "tab",
+      "name": "Inbox"
+    },
+    {
+      "id": "t5",
+      "x": 160,
+      "y": 44,
+      "w": 160,
+      "h": 30,
+      "role": "tab"
+    },
+    {
+      "id": "t6",
+      "x": 40,
+      "y": 120,
+      "w": 220,
+      "h": 18,
+      "role": "link",
+      "name": "Read the docs"
+    },
+    {
+      "id": "t7",
+      "x": 40,
+      "y": 160,
+      "w": 18,
+      "h": 18,
+      "role": "checkbox",
+      "name": "Remember me"
+    },
+    {
+      "id": "t8",
+      "x": 1200,
+      "y": 880,
+      "w": 120,
+      "h": 36,
+      "role": "button",
+      "name": "Cancel"
+    },
+    {
+      "id": "t9",
+      "x": 1340,
+      "y": 880,
+      "w": 120,
+      "h": 36,
+      "role": "button",
+      "name": "OK"
+    },
+    {
+      "id": "t10",
+      "x": 1480,
+      "y": 0,
+      "w": 32,
+      "h": 24,
+      "role": "menu_item",
+      "name": "Settings"
+    },
+    {
+      "id": "t11",
+      "x": 700,
+      "y": 500,
+      "w": 0,
+      "h": 0,
+      "role": "other"
+    }
+  ]
+}

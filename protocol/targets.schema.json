@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ArchawinL/look-no-hands/protocol/targets.schema.json",
+  "title": "look-no-hands fake target layout",
+  "description": "Used by the Python snap demo and the Rust fake provider. Coordinates are logical points, origin top-left.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["screen", "targets"],
+  "properties": {
+    "screen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["w", "h"],
+      "properties": {
+        "w": { "type": "number", "exclusiveMinimum": 0 },
+        "h": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "targets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "x", "y", "w", "h", "role"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "x": { "type": "number" },
+          "y": { "type": "number" },
+          "w": { "type": "number", "minimum": 0 },
+          "h": { "type": "number", "minimum": 0 },
+          "role": { "enum": ["button", "link", "menu_item", "tab", "checkbox", "text_field", "other"] },
+          "name": { "type": "string" }
+        }
+      }
+    }
+  }
+}

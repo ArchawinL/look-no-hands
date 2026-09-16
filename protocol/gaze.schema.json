@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ArchawinL/look-no-hands/protocol/gaze.schema.json",
+  "title": "look-no-hands gaze protocol v1 message",
+  "description": "One JSON object per line over TCP 127.0.0.1:47800. Emitters must match this schema exactly; clients must ignore unknown fields and unknown types.",
+  "type": "object",
+  "required": ["v", "type", "t_ms"],
+  "properties": {
+    "v": { "const": 1 },
+    "type": { "enum": ["gaze", "wink", "status"] },
+    "t_ms": { "$ref": "#/$defs/t_ms" }
+  },
+  "oneOf": [
+    { "$ref": "#/$defs/gaze" },
+    { "$ref": "#/$defs/wink" },
+    { "$ref": "#/$defs/status" }
+  ],
+  "$defs": {
+    "t_ms": {
+      "description": "Monotonic milliseconds since sidecar start.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "gaze": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["v", "type", "t_ms", "x", "y", "conf"],
+      "properties": {
+        "v": { "const": 1 },
+        "type": { "const": "gaze" },
+        "t_ms": { "$ref": "#/$defs/t_ms" },
+        "x": { "type": "number", "description": "Smoothed gaze, logical points, primary display." },
+        "y": { "type": "number" },
+        "conf": { "type": "number", "minimum": 0, "maximum": 1 },
+        "raw_x": { "type": "number", "description": "Pre-smoothing gaze, for debugging." },
+        "raw_y": { "type": "number" },
+        "head": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["yaw", "pitch", "roll"],
+          "properties": {
+            "yaw": { "type": "number", "description": "Degrees." },
+            "pitch": { "type": "number" },
+            "roll": { "type": "number" }
+          }
+        },
+        "eyes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["blink_l", "blink_r"],
+          "properties": {
+            "blink_l": { "type": "number", "minimum": 0, "maximum": 1, "description": "User's left eye." },
+            "blink_r": { "type": "number", "minimum": 0, "maximum": 1, "description": "User's right eye." }
+          }
+        }
+      }
+    },
+    "wink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["v", "type", "t_ms", "eye", "x", "y", "lock_t_ms", "duration_ms"],
+      "properties": {
+        "v": { "const": 1 },
+        "type": { "const": "wink" },
+        "t_ms": { "$ref": "#/$defs/t_ms" },
+        "eye": { "enum": ["left", "right"], "description": "The user's eye, regardless of camera mirroring." },
+        "x": { "type": "number", "description": "Gaze locked from before wink onset." },
+        "y": { "type": "number" },
+        "lock_t_ms": { "$ref": "#/$defs/t_ms" },
+        "duration_ms": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["v", "type", "t_ms", "state"],
+      "properties": {
+        "v": { "const": 1 },
+        "type": { "const": "status" },
+        "t_ms": { "$ref": "#/$defs/t_ms" },
+        "state": { "enum": ["tracking", "no_face", "uncalibrated", "calibrating", "paused"] },
+        "fps": { "type": "number", "minimum": 0 },
+        "profile": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
