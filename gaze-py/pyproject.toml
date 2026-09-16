@@ -1,7 +1,7 @@
 [project]
 name = "look-no-hands"
 version = "0.1.0"
-description = "Add your description here"
+description = "Webcam gaze and wink sidecar for look-no-hands"
 readme = "README.md"
 authors = [
     { name = "ArchawinL", email = "a.leelapanang@gmail.com" }
@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.scripts]
-look-no-hands = "look_no_hands:main"
+look-no-hands = "look_no_hands.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.12.15,<0.13.0"]
@@ -29,3 +29,24 @@ dev = [
     "pytest>=9.1.1",
     "ruff>=0.16.7",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "hardware: needs a camera, model file, or display (skipped in CI)",
+    "slow: slow test",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+
+[[tool.mypy.overrides]]
+module = ["mediapipe.*", "screeninfo.*"]
+ignore_missing_imports = true

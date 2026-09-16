@@ -22,7 +22,7 @@ Read [`PLAN.md`](./PLAN.md) first for architecture, layout, and the protocol.
 ## Status board
 
 **Foundation**
-- [ ] M0 — Initialise repository (agent)
+- [ ] M0 — Initialise repository (agent) — *Python/protocol/CI slice done; Rust & C++ skeletons deferred*
 
 **P-track — Python gaze sidecar (agent)**
 - [ ] P1 — Camera, landmarks, debug viewer, `doctor`
@@ -401,4 +401,4 @@ Newest first. One row per completed story, split story, or notable finding (accu
 
 | Date | Story | Who | Notes |
 |---|---|---|---|
-| | | | |
+| 2026-09-16 | M0 (split) | agent | Python-only slice per human: repo tooling, protocol v1 schemas + fixtures, `gaze-py` skeleton (uv, Python 3.12, mediapipe 1.0.1). Rust/C++ skeletons deferred until those tracks start. D1–D6 in `docs/decisions/0002`, awaiting human confirmation. |
